@@ -29,7 +29,7 @@ struct Repository: Identifiable, Decodable {
     let id: Int
     let name: String
     let fullName: String
-    let language: String
+    let language: String?
     
     let owner: Owner
     @URLDecoder var htmlUrl: URL?
