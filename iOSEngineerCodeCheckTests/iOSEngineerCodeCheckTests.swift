@@ -1,34 +1,64 @@
-//
-//  iOSEngineerCodeCheckTests.swift
-//  iOSEngineerCodeCheckTests
-//
-//  Created by 史 翔新 on 2020/04/20.
-//  Copyright © 2020 YUMEMI Inc. All rights reserved.
-//
-
 import XCTest
+import Combine
 @testable import iOSEngineerCodeCheck
 
 class iOSEngineerCodeCheckTests: XCTestCase {
 
+    var client: GithubClient!
+    var cancellables: [AnyCancellable] = []
+    
     override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+        client = GithubClient()
+        cancellables = []
     }
 
-    override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-    }
-
-    func testExample() throws {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-    }
-
-    func testPerformanceExample() throws {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
+    func testSearchRepositories() throws {
+        let expectation = XCTestExpectation()
+        var requestError: Error?
+        var searchResult: SearchRepositoriesResult!
+        
+        let request = SearchRepositoriesRequest(query: "swift")
+        client.send(request)
+            .sink { completion in
+                switch completion {
+                case .finished:
+                    expectation.fulfill()
+                case .failure(let error):
+                    requestError = error
+                }
+            } receiveValue: { searchResult = $0 }
+            .store(in: &cancellables)
+        wait(for: [expectation], timeout: 5)
+        
+        if let error = requestError {
+            throw error
+        } else {
+            XCTAssertEqual(searchResult.repositories.count, 30)
         }
     }
-
+    
+    func testSearchRepositoriesCustomPerPage() throws {
+        let expectation = XCTestExpectation()
+        var requestError: Error?
+        var searchResult: SearchRepositoriesResult!
+        
+        let request = SearchRepositoriesRequest(query: "python", perPage: 5)
+        client.send(request)
+            .sink { completion in
+                switch completion {
+                case .finished:
+                    expectation.fulfill()
+                case .failure(let error):
+                    requestError = error
+                }
+            } receiveValue: { searchResult = $0 }
+            .store(in: &cancellables)
+        wait(for: [expectation], timeout: 5)
+        
+        if let error = requestError {
+            throw error
+        } else {
+            XCTAssertEqual(searchResult.repositories.count, 5)
+        }
+    }
 }
