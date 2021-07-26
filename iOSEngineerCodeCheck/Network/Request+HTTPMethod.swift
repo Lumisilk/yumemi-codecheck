@@ -1,11 +1,3 @@
-//
-//  Request.swift
-//  iOSEngineerCodeCheck
-//
-//  Created by ribilynn on 2021/07/24.
-//  Copyright © 2021 YUMEMI Inc. All rights reserved.
-//
-
 import Foundation
 
 enum HTTPMethod: String {

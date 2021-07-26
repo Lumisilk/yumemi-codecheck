@@ -1,11 +1,3 @@
-//
-//  SearchRepositoriesResult.swift
-//  iOSEngineerCodeCheck
-//
-//  Created by ribilynn on 2021/07/25.
-//  Copyright © 2021 YUMEMI Inc. All rights reserved.
-//
-
 import Foundation
 
 /// Represent the result of searching repositories.

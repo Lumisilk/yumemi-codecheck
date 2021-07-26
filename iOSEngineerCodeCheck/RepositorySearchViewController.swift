@@ -49,6 +49,7 @@ extension RepositorySearchViewController: UISearchBarDelegate {
               !searchText.isEmpty else {
             return
         }
+        
         let request = SearchRepositoriesRequest(query: searchText)
         cancellable = client.send(request)
             .receive(on: DispatchQueue.main)

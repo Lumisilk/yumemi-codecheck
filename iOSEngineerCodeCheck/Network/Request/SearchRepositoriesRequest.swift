@@ -1,11 +1,3 @@
-//
-//  SearchRepositoriesRequest.swift
-//  iOSEngineerCodeCheck
-//
-//  Created by ribilynn on 2021/07/25.
-//  Copyright © 2021 YUMEMI Inc. All rights reserved.
-//
-
 import Foundation
 
 /// An request to search github repositories. The response is `SearchRepositoriesResult`.

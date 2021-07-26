@@ -1,16 +1,9 @@
-//
-//  Repository.swift
-//  iOSEngineerCodeCheck
-//
-//  Created by ribilynn on 2021/07/26.
-//  Copyright © 2021 YUMEMI Inc. All rights reserved.
-//
-
 import Foundation
 
 /// Represent a github repository.
 struct Repository: Identifiable, Decodable {
     
+    /// Represent an owner of a repository.
     struct Owner: Identifiable, Decodable {
         let id: Int
         /// The name of this owner.

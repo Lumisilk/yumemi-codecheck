@@ -1,11 +1,3 @@
-//
-//  iOSEngineerCodeCheckTests.swift
-//  iOSEngineerCodeCheckTests
-//
-//  Created by 史 翔新 on 2020/04/20.
-//  Copyright © 2020 YUMEMI Inc. All rights reserved.
-//
-
 import XCTest
 import Combine
 @testable import iOSEngineerCodeCheck
@@ -45,12 +37,12 @@ class iOSEngineerCodeCheckTests: XCTestCase {
         }
     }
     
-    func testSearchRepositoriesChangePerPage() throws {
+    func testSearchRepositoriesCustomPerPage() throws {
         let expectation = XCTestExpectation()
         var requestError: Error?
         var searchResult: SearchRepositoriesResult!
         
-        let request = SearchRepositoriesRequest(query: "swift", perPage: 5)
+        let request = SearchRepositoriesRequest(query: "python", perPage: 5)
         client.send(request)
             .sink { completion in
                 switch completion {
