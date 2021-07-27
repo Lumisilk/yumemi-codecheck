@@ -1,26 +1,24 @@
 import UIKit
 import Combine
+import SwiftUI
 
 class RepositorySearchViewController: UITableViewController {
 
-    @IBOutlet weak var searchBar: UISearchBar!
-    
     let client: Client = GithubClient()
     var cancellable: AnyCancellable?
-    var repositories: [Repository] = []
+    var repositories: [RepositoriesSearchResult.Repository] = []
     
     override func viewDidLoad() {
-        searchBar.placeholder = "GitHubのリポジトリを検索できるよー"
-        searchBar.delegate = self
-        searchBar.becomeFirstResponder()
+        title = "Github Repositories"
+        configureSearchController()
     }
-
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "Detail",
-           let repositoriy = sender as? Repository,
-           let repositoryDetailViewController = segue.destination as? RepositoryDetailViewController {
-            repositoryDetailViewController.repository = repositoriy
-        }
+    
+    private func configureSearchController() {
+        let searchController = UISearchController()
+        searchController.searchBar.delegate = self
+        searchController.searchBar.placeholder = "Search repositories"
+        searchController.obscuresBackgroundDuringPresentation = false
+        navigationItem.searchController = searchController
     }
     
     // MARK: UITableView
@@ -38,19 +36,23 @@ class RepositorySearchViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let repository = repositories[indexPath.row]
-        performSegue(withIdentifier: "Detail", sender: repository)
+        let viewModel = RepositoryViewModel(client: client, ownerName: repository.owner.login, repositoryName: repository.name)
+        let view = RepositoryView(viewModel: viewModel)
+        let viewController = UIHostingController(rootView: view)
+        viewController.title = repository.owner.login
+        show(viewController, sender: nil)
     }
 }
 
 extension RepositorySearchViewController: UISearchBarDelegate {
+    
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        cancellable?.cancel()
         guard let searchText = searchBar.text,
               !searchText.isEmpty else {
             return
         }
         
-        let request = SearchRepositoriesRequest(query: searchText)
+        let request = RepositoriesSearchRequest(query: searchText)
         cancellable = client.send(request)
             .receive(on: DispatchQueue.main)
             .sink(receiveCompletion: { completion in

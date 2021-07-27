@@ -2,7 +2,7 @@ import XCTest
 import Combine
 @testable import iOSEngineerCodeCheck
 
-class iOSEngineerCodeCheckTests: XCTestCase {
+class NetworkTests: XCTestCase {
 
     var client: GithubClient!
     var cancellables: [AnyCancellable] = []
@@ -15,9 +15,9 @@ class iOSEngineerCodeCheckTests: XCTestCase {
     func testSearchRepositories() throws {
         let expectation = XCTestExpectation()
         var requestError: Error?
-        var searchResult: SearchRepositoriesResult!
+        var searchResult: RepositoriesSearchResult!
         
-        let request = SearchRepositoriesRequest(query: "swift")
+        let request = RepositoriesSearchRequest(query: "swift")
         client.send(request)
             .sink { completion in
                 switch completion {
@@ -40,9 +40,9 @@ class iOSEngineerCodeCheckTests: XCTestCase {
     func testSearchRepositoriesCustomPerPage() throws {
         let expectation = XCTestExpectation()
         var requestError: Error?
-        var searchResult: SearchRepositoriesResult!
+        var searchResult: RepositoriesSearchResult!
         
-        let request = SearchRepositoriesRequest(query: "python", perPage: 5)
+        let request = RepositoriesSearchRequest(query: "python", perPage: 5)
         client.send(request)
             .sink { completion in
                 switch completion {
@@ -60,5 +60,31 @@ class iOSEngineerCodeCheckTests: XCTestCase {
         } else {
             XCTAssertEqual(searchResult.repositories.count, 5)
         }
+    }
+    
+    func testRepository() throws {
+        let expectation = XCTestExpectation()
+        var requestError: Error?
+        var repository: Repository?
+        
+        let request = RepositoryRequest(ownerName: "apple", repositoryName: "swift")
+        client.send(request)
+            .sink { completion in
+                switch completion {
+                case .finished:
+                    expectation.fulfill()
+                case .failure(let error):
+                    requestError = error
+                }
+            } receiveValue: {
+                repository = $0
+            }
+            .store(in: &cancellables)
+        wait(for: [expectation], timeout: 5)
+        
+        if let error = requestError {
+            throw error
+        }
+        dump(repository)
     }
 }
