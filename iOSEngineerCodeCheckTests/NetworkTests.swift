@@ -15,9 +15,9 @@ class NetworkTests: XCTestCase {
     func testSearchRepositories() throws {
         let expectation = XCTestExpectation()
         var requestError: Error?
-        var searchResult: RepositoriesSearchResult!
+        var searchResult: RepositorySearchResult!
         
-        let request = RepositoriesSearchRequest(query: "swift")
+        let request = RepositorySearchRequest(query: "swift")
         client.send(request)
             .sink { completion in
                 switch completion {
@@ -40,9 +40,9 @@ class NetworkTests: XCTestCase {
     func testSearchRepositoriesCustomPerPage() throws {
         let expectation = XCTestExpectation()
         var requestError: Error?
-        var searchResult: RepositoriesSearchResult!
+        var searchResult: RepositorySearchResult!
         
-        let request = RepositoriesSearchRequest(query: "python", perPage: 5)
+        let request = RepositorySearchRequest(query: "python", perPage: 5)
         client.send(request)
             .sink { completion in
                 switch completion {

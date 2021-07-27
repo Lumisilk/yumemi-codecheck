@@ -19,9 +19,11 @@
 		BB27BA3026AF916E00D3B9AA /* RepositoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB27BA2F26AF916E00D3B9AA /* RepositoryViewModel.swift */; };
 		BBCADE1426AC016A005219EA /* Request+HTTPMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBCADE1326AC016A005219EA /* Request+HTTPMethod.swift */; };
 		BBE1640B26AC5ABD00A440BA /* Client.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBE1640A26AC5ABD00A440BA /* Client.swift */; };
-		BBE1640E26AC651700A440BA /* RepositoriesSearchResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBE1640D26AC651700A440BA /* RepositoriesSearchResult.swift */; };
-		BBE1641126AC664C00A440BA /* RepositoriesSearchRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBE1641026AC664C00A440BA /* RepositoriesSearchRequest.swift */; };
+		BBE1640E26AC651700A440BA /* RepositorySearchResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBE1640D26AC651700A440BA /* RepositorySearchResult.swift */; };
+		BBE1641126AC664C00A440BA /* RepositorySearchRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBE1641026AC664C00A440BA /* RepositorySearchRequest.swift */; };
 		BBF974AC26AFB32C004E254E /* CountFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBF974AB26AFB32C004E254E /* CountFormatter.swift */; };
+		BBF974AE26AFE105004E254E /* RepositorySearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBF974AD26AFE105004E254E /* RepositorySearchViewModel.swift */; };
+		BBF974B426AFED87004E254E /* UIKitExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBF974B326AFED87004E254E /* UIKitExtension.swift */; };
 		BFD945DF244DC5E80012785A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD945DE244DC5E80012785A /* AppDelegate.swift */; };
 		BFD945E1244DC5E80012785A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD945E0244DC5E80012785A /* SceneDelegate.swift */; };
 		BFD945E3244DC5E80012785A /* RepositorySearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD945E2244DC5E80012785A /* RepositorySearchViewController.swift */; };
@@ -52,9 +54,11 @@
 		BB27BA2F26AF916E00D3B9AA /* RepositoryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryViewModel.swift; sourceTree = "<group>"; };
 		BBCADE1326AC016A005219EA /* Request+HTTPMethod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Request+HTTPMethod.swift"; sourceTree = "<group>"; };
 		BBE1640A26AC5ABD00A440BA /* Client.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Client.swift; sourceTree = "<group>"; };
-		BBE1640D26AC651700A440BA /* RepositoriesSearchResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoriesSearchResult.swift; sourceTree = "<group>"; };
-		BBE1641026AC664C00A440BA /* RepositoriesSearchRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoriesSearchRequest.swift; sourceTree = "<group>"; };
+		BBE1640D26AC651700A440BA /* RepositorySearchResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositorySearchResult.swift; sourceTree = "<group>"; };
+		BBE1641026AC664C00A440BA /* RepositorySearchRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositorySearchRequest.swift; sourceTree = "<group>"; };
 		BBF974AB26AFB32C004E254E /* CountFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountFormatter.swift; sourceTree = "<group>"; };
+		BBF974AD26AFE105004E254E /* RepositorySearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositorySearchViewModel.swift; sourceTree = "<group>"; };
+		BBF974B326AFED87004E254E /* UIKitExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIKitExtension.swift; sourceTree = "<group>"; };
 		BFD945DB244DC5E80012785A /* iOSEngineerCodeCheck.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iOSEngineerCodeCheck.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BFD945DE244DC5E80012785A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BFD945E0244DC5E80012785A /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -138,6 +142,7 @@
 		BB27BA2326AF1F7D00D3B9AA /* RepositoriesSearch */ = {
 			isa = PBXGroup;
 			children = (
+				BBF974AD26AFE105004E254E /* RepositorySearchViewModel.swift */,
 				BFD945E2244DC5E80012785A /* RepositorySearchViewController.swift */,
 			);
 			path = RepositoriesSearch;
@@ -165,7 +170,7 @@
 		BBE1640C26AC64DC00A440BA /* Entity */ = {
 			isa = PBXGroup;
 			children = (
-				BBE1640D26AC651700A440BA /* RepositoriesSearchResult.swift */,
+				BBE1640D26AC651700A440BA /* RepositorySearchResult.swift */,
 				BB27BA1426AE9E9D00D3B9AA /* Repository.swift */,
 			);
 			path = Entity;
@@ -174,7 +179,7 @@
 		BBE1640F26AC663600A440BA /* Request */ = {
 			isa = PBXGroup;
 			children = (
-				BBE1641026AC664C00A440BA /* RepositoriesSearchRequest.swift */,
+				BBE1641026AC664C00A440BA /* RepositorySearchRequest.swift */,
 				BB27BA2D26AF8FFD00D3B9AA /* RepositoryRequest.swift */,
 			);
 			path = Request;
@@ -184,6 +189,7 @@
 			isa = PBXGroup;
 			children = (
 				BB27BA2126AEE3EB00D3B9AA /* SwiftUIExtension.swift */,
+				BBF974B326AFED87004E254E /* UIKitExtension.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -276,7 +282,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1140;
-				LastUpgradeCheck = 1140;
+				LastUpgradeCheck = 1250;
 				ORGANIZATIONNAME = "YUMEMI Inc.";
 				TargetAttributes = {
 					BFD945DA244DC5E80012785A = {
@@ -337,17 +343,19 @@
 			buildActionMask = 2147483647;
 			files = (
 				BB27BA1726AED72100D3B9AA /* RepositoryView.swift in Sources */,
+				BBF974B426AFED87004E254E /* UIKitExtension.swift in Sources */,
 				BB27BA2226AEE3EB00D3B9AA /* SwiftUIExtension.swift in Sources */,
 				BB27BA3026AF916E00D3B9AA /* RepositoryViewModel.swift in Sources */,
 				BBF974AC26AFB32C004E254E /* CountFormatter.swift in Sources */,
 				BFD945E3244DC5E80012785A /* RepositorySearchViewController.swift in Sources */,
-				BBE1641126AC664C00A440BA /* RepositoriesSearchRequest.swift in Sources */,
+				BBE1641126AC664C00A440BA /* RepositorySearchRequest.swift in Sources */,
 				BB27BA1326AE6CF100D3B9AA /* URLDecoder.swift in Sources */,
-				BBE1640E26AC651700A440BA /* RepositoriesSearchResult.swift in Sources */,
+				BBE1640E26AC651700A440BA /* RepositorySearchResult.swift in Sources */,
 				BBE1640B26AC5ABD00A440BA /* Client.swift in Sources */,
 				BBCADE1426AC016A005219EA /* Request+HTTPMethod.swift in Sources */,
 				BB27BA2E26AF8FFD00D3B9AA /* RepositoryRequest.swift in Sources */,
 				BB27BA1C26AEDA0300D3B9AA /* PreviewData.swift in Sources */,
+				BBF974AE26AFE105004E254E /* RepositorySearchViewModel.swift in Sources */,
 				BB27BA1526AE9E9D00D3B9AA /* Repository.swift in Sources */,
 				BFD945DF244DC5E80012785A /* AppDelegate.swift in Sources */,
 				BFD945E1244DC5E80012785A /* SceneDelegate.swift in Sources */,
@@ -410,6 +418,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -470,6 +479,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;

@@ -1,7 +1,7 @@
 import Foundation
 
 /// Represent the result of searching repositories.
-struct RepositoriesSearchResult: Decodable {
+struct RepositorySearchResult: Decodable {
     let totalCount: Int
     let incompleteResults: Bool
     let repositories: [Repository]
@@ -13,9 +13,9 @@ struct RepositoriesSearchResult: Decodable {
     }
 }
 
-extension RepositoriesSearchResult {
+extension RepositorySearchResult {
     /// Represent a github repository within a `RepositoriesSearchResult`.
-    struct Repository: Identifiable, Decodable {
+    struct Repository: Identifiable, Hashable, Decodable {
         
         /// Represent an owner of a repository.
         struct Owner: Identifiable, Decodable {

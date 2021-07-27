@@ -1,7 +1,7 @@
 import Foundation
 
 /// An request to search github repositories. The response is `RepositoriesSearchResult`.
-struct RepositoriesSearchRequest: Request {
+struct RepositorySearchRequest: Request {
     
     enum SortType: String {
         case stars
@@ -10,7 +10,7 @@ struct RepositoriesSearchRequest: Request {
         case updated
     }
     
-    typealias Response = RepositoriesSearchResult
+    typealias Response = RepositorySearchResult
     let method: HTTPMethod = .get
     let path: String = "/search/repositories"
     var parameters: [String : String] = [:]

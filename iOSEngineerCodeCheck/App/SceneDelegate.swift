@@ -15,7 +15,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         if let windowScene = scene as? UIWindowScene {
             let window = UIWindow(windowScene: windowScene)
-            let searchViewController = RepositorySearchViewController(style: .plain)
+            let searchViewController = RepositorySearchViewController(viewModel: RepositorySearchViewModel(client: GithubClient()))
             let navigationViewController = UINavigationController(rootViewController: searchViewController)
             window.rootViewController = navigationViewController
             self.window = window
