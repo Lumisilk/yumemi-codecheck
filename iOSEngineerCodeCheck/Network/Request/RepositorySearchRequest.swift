@@ -1,7 +1,7 @@
 import Foundation
 
-/// An request to search github repositories. The response is `SearchRepositoriesResult`.
-struct SearchRepositoriesRequest: Request {
+/// An request to search github repositories. The response is `RepositoriesSearchResult`.
+struct RepositorySearchRequest: Request {
     
     enum SortType: String {
         case stars
@@ -10,12 +10,12 @@ struct SearchRepositoriesRequest: Request {
         case updated
     }
     
-    typealias Response = SearchRepositoriesResult
+    typealias Response = RepositorySearchResult
     let method: HTTPMethod = .get
     let path: String = "/search/repositories"
     var parameters: [String : String] = [:]
     
-    /// Make a SearchRepositoriesRequest.
+    /// Make a RepositoriesSearchRequest.
     /// - Parameters:
     ///   - query: The query contains one or more search keywords and qualifiers. Qualifiers allow you to limit your search to specific areas of GitHub.
     ///   - sortType: Sorts the results of your query by number of `stars`, `forks`, or `help-wanted-issues` or how recently the items were `updated`.

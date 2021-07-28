@@ -16,10 +16,12 @@ struct GithubClient: Client {
     
     func makeURLRequest<RequestType: Request>(by request: RequestType) -> URLRequest {
         var components = URLComponents(string: host)!
-        components.queryItems = request.parameters.map {
-            URLQueryItem(name: $0, value: $1)
+        if !request.parameters.isEmpty {
+            components.queryItems = request.parameters.map {
+                URLQueryItem(name: $0, value: $1)
+            }
+            components.percentEncodedQuery = components.percentEncodedQuery?.replacingOccurrences(of: "+", with: "%2B")
         }
-        components.percentEncodedQuery = components.percentEncodedQuery?.replacingOccurrences(of: "+", with: "%2B")
         components.path = request.path
         var urlRequest = URLRequest(url: components.url!)
         urlRequest.httpMethod = request.method.rawValue
