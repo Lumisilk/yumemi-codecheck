@@ -10,19 +10,19 @@ protocol RepositorySearchViewModelProtocol {
 }
 
 final class RepositorySearchViewModel: RepositorySearchViewModelProtocol {
-    
+
     let client: Client
     private var cancellable: AnyCancellable?
-    
+
     let isLoading = CurrentValueSubject<Bool, Never>(false)
     let repositories = CurrentValueSubject<[RepositorySearchResult.Repository], Never>([])
     private let error = PassthroughSubject<Error, Never>()
     var errorPublisher: AnyPublisher<Error, Never> { error.eraseToAnyPublisher() }
-    
+
     init(client: Client) {
         self.client = client
     }
-    
+
     func search(text: String) {
         reset()
         isLoading.value = true
@@ -38,7 +38,7 @@ final class RepositorySearchViewModel: RepositorySearchViewModelProtocol {
                 self?.repositories.value = searchResult.repositories
             })
     }
-    
+
     private func reset() {
         repositories.send([])
     }

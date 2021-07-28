@@ -4,7 +4,7 @@ import Foundation
 @propertyWrapper
 struct URLDecoder: Equatable, Decodable {
     var wrappedValue: URL?
-    
+
     init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
         if let str = try? container.decode(String.self),

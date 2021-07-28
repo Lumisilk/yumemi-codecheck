@@ -2,7 +2,7 @@ import Foundation
 
 /// Represent a github repository.
 struct Repository: Decodable {
-    
+
     /// Represent an owner of a repository.
     struct Owner: Identifiable, Decodable {
         let id: Int
@@ -10,7 +10,7 @@ struct Repository: Decodable {
         let login: String
         @URLDecoder var avatarUrl: URL?
         @URLDecoder var htmlURL: URL?
-        
+
         private enum CodingKeys: String, CodingKey {
             case login
             case id
@@ -25,7 +25,7 @@ struct Repository: Decodable {
     let owner: Owner
     let description: String
     let language: String?
-    
+
     @URLDecoder var htmlUrl: URL?
     @URLDecoder var homepage: URL?
 
@@ -33,7 +33,7 @@ struct Repository: Decodable {
     let forksCount: Int
     let openIssuesCount: Int
     let subscribersCount: Int
-    
+
     private enum CodingKeys: String, CodingKey {
         case id
         case name

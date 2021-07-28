@@ -6,23 +6,23 @@ class RepositorySearchViewController: UITableViewController {
 
     let viewModel: RepositorySearchViewModelProtocol
     var cancellables: [AnyCancellable] = []
-    
+
     init(viewModel: RepositorySearchViewModelProtocol) {
         self.viewModel = viewModel
         super.init(style: .plain)
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     override func viewDidLoad() {
         title = "Github Repositories"
         configureSearchController()
         configureTableView()
         subscribe()
     }
-    
+
     private func configureSearchController() {
         let searchController = UISearchController()
         searchController.hidesNavigationBarDuringPresentation = false
@@ -32,12 +32,12 @@ class RepositorySearchViewController: UITableViewController {
         searchController.obscuresBackgroundDuringPresentation = false
         navigationItem.searchController = searchController
     }
-    
+
     private func configureTableView() {
         tableView.register(RepositorySearchResultCell.self)
         tableView.keyboardDismissMode = .onDrag
     }
-    
+
     private func subscribe() {
         viewModel.isLoading.combineLatest(viewModel.repositories)
             .receive(on: DispatchQueue.main)
@@ -45,7 +45,7 @@ class RepositorySearchViewController: UITableViewController {
                 self?.tableView.reloadData()
             }
             .store(in: &cancellables)
-        
+
         viewModel.errorPublisher
             .receive(on: DispatchQueue.main)
             .sink { [weak self] error in
@@ -53,13 +53,13 @@ class RepositorySearchViewController: UITableViewController {
             }
             .store(in: &cancellables)
     }
-    
+
     private func presentError(_ error: Error) {
         let alert = UIAlertController(title: "Error", message: error.localizedDescription, preferredStyle: UIAlertController.Style.alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default))
         present(alert, animated: true)
     }
-    
+
     // MARK: UITableView
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if viewModel.isLoading.value {
@@ -68,7 +68,7 @@ class RepositorySearchViewController: UITableViewController {
             return viewModel.repositories.value.count
         }
     }
-    
+
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.row == viewModel.repositories.value.count {
             // loading cell
@@ -81,11 +81,11 @@ class RepositorySearchViewController: UITableViewController {
             return cell
         }
     }
-    
+
     override func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
         indexPath.row < viewModel.repositories.value.count ? indexPath: nil
     }
-    
+
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard indexPath.row < viewModel.repositories.value.count else {
             return
@@ -110,15 +110,15 @@ extension RepositorySearchViewController: UISearchBarDelegate {
 
 #if DEBUG
 struct RepositorySearchViewControllerRepresentable: UIViewControllerRepresentable {
-    
+
     final class MockRepositorySearchViewModel: RepositorySearchViewModelProtocol {
-        
+
         let client: Client = GithubClient()
-        
+
         let isLoading = CurrentValueSubject<Bool, Never>(true)
         let repositories = CurrentValueSubject<[RepositorySearchResult.Repository], Never>([])
         @Published var error: Error?
-        
+
         var errorPublisher: AnyPublisher<Error, Never> {
             $error.compactMap { $0 }.eraseToAnyPublisher()
         }
@@ -129,18 +129,18 @@ struct RepositorySearchViewControllerRepresentable: UIViewControllerRepresentabl
                 self.isLoading.send(false)
             }
         }
-        
+
         func search(text: String) {}
     }
-    
+
     let delay: Double
-    
+
     func makeUIViewController(context: Context) -> UINavigationController {
         UINavigationController(rootViewController: RepositorySearchViewController(viewModel: MockRepositorySearchViewModel(delay: delay)))
     }
-    
+
     func updateUIViewController(_ uiViewController: UINavigationController, context: Context) {
-        
+
     }
 }
 
