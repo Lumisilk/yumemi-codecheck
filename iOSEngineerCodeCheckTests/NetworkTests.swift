@@ -83,7 +83,7 @@ class NetworkTests: XCTestCase {
         if let error = requestError {
             throw error
         } else {
-            // star count is descending
+            // confirm the star count is descending
             _ = searchResult.repositories.reduce(Int.max) { maxStar, repo in
                 XCTAssert(repo.stargazersCount <= maxStar)
                 return repo.stargazersCount
@@ -94,7 +94,6 @@ class NetworkTests: XCTestCase {
     func testRepository() throws {
         let expectation = XCTestExpectation()
         var requestError: Error?
-        var repository: Repository?
 
         let request = RepositoryRequest(ownerName: "apple", repositoryName: "swift")
         client.send(request)
@@ -105,15 +104,12 @@ class NetworkTests: XCTestCase {
                 case .failure(let error):
                     requestError = error
                 }
-            } receiveValue: {
-                repository = $0
-            }
+            } receiveValue: { _ in }
             .store(in: &cancellables)
         wait(for: [expectation], timeout: 5)
 
         if let error = requestError {
             throw error
         }
-        dump(repository)
     }
 }

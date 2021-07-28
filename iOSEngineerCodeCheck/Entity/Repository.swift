@@ -1,9 +1,9 @@
 import Foundation
 
-/// Represent a github repository.
+/// Represents a github repository.
 struct Repository: Decodable {
 
-    /// Represent an owner of a repository.
+    /// Represents an owner of a repository.
     struct Owner: Identifiable, Decodable {
         let id: Int
         /// The name of this owner.

@@ -92,7 +92,7 @@ struct RepositoryView<ViewModel: RepositoryViewModelProtocol>: View {
         .padding(.vertical)
     }
 
-    /// Represent a star, fork, watch or issue count.
+    /// Represents a star, fork, watch or issue count.
     private func tagView(imageName: String, title: LocalizedStringKey, count: Int) -> some View {
         HStack(spacing: 4) {
             Image(systemName: imageName)

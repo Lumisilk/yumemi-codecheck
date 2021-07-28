@@ -1,5 +1,6 @@
 import Foundation
 
+/// An request to fetch the detail of a repository.
 struct RepositoryRequest: Request {
     typealias Response = Repository
 

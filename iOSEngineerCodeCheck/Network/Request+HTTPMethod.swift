@@ -4,6 +4,7 @@ enum HTTPMethod: String {
     case get = "GET"
 }
 
+/// Represents a request to the Github API.
 protocol Request {
     associatedtype Response: Decodable
 

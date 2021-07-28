@@ -1,6 +1,7 @@
 import Foundation
 import Combine
 
+/// Represents a session client for sending request to the github API.
 protocol Client {
     func send<RequestType: Request>(_ request: RequestType) -> AnyPublisher<RequestType.Response, Error>
 }

@@ -139,9 +139,7 @@ struct RepositorySearchViewControllerRepresentable: UIViewControllerRepresentabl
         UINavigationController(rootViewController: RepositorySearchViewController(viewModel: MockRepositorySearchViewModel(delay: delay)))
     }
 
-    func updateUIViewController(_ uiViewController: UINavigationController, context: Context) {
-
-    }
+    func updateUIViewController(_ uiViewController: UINavigationController, context: Context) {}
 }
 
 struct RepositorySearchViewControllerPreview: PreviewProvider {
