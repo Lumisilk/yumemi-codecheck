@@ -17,7 +17,7 @@ class RepositorySearchViewController: UITableViewController {
     }
     
     override func viewDidLoad() {
-        title = "Search Repositories"
+        title = "Github Repositories"
         configureSearchController()
         configureTableView()
         subscribe()
@@ -37,13 +37,6 @@ class RepositorySearchViewController: UITableViewController {
     }
     
     private func subscribe() {
-        viewModel.isLoadingPublisher
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] isLoading in
-                
-            }
-            .store(in: &cancellables)
-        
         viewModel.errorPublisher
             .receive(on: DispatchQueue.main)
             .sink { [weak self] error in
@@ -89,6 +82,7 @@ class RepositorySearchViewController: UITableViewController {
     }
 }
 
+// MARK: - UISearchBarDelegate
 extension RepositorySearchViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         if let searchText = searchBar.text, !searchText.isEmpty {

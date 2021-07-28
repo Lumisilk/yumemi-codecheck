@@ -35,7 +35,9 @@ final class RepositorySearchResultCell: UITableViewCell {
         ownerAvatarImageView.snp.makeConstraints { make in
             make.size.equalTo(28)
         }
+        
         ownerNameLabel.font = .preferredFont(forTextStyle: .footnote)
+        
         ownerStack.axis = .horizontal
         ownerStack.spacing = 8
         ownerStack.alignment = .center
@@ -44,6 +46,7 @@ final class RepositorySearchResultCell: UITableViewCell {
         
         // name
         nameLabel.font = .preferredFont(forTextStyle: .title2)
+        nameLabel.numberOfLines = 0
         
         // description
         descriptionLabel.font = .preferredFont(forTextStyle: .subheadline)
@@ -55,8 +58,10 @@ final class RepositorySearchResultCell: UITableViewCell {
         starIcon.tintColor = .secondaryLabel
         starCountLabel.font = .preferredFont(forTextStyle: .subheadline)
         starCountLabel.textColor = .secondaryLabel
+        
         languageLabel.font = .preferredFont(forTextStyle: .subheadline)
         languageLabel.textColor = .secondaryLabel
+        
         infoStack.axis = .horizontal
         infoStack.spacing = 4
         infoStack.alignment = .firstBaseline

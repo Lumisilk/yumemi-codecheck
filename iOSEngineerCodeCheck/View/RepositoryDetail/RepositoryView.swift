@@ -12,7 +12,7 @@ struct RepositoryView<ViewModel: RepositoryViewModelProtocol>: View {
         } else {
             List {
                 if let repository = viewModel.repository {
-                    header(repository: repository)
+                    headerView(repository: repository)
                 }
             }
             .listStyle(GroupedListStyle())
@@ -35,7 +35,7 @@ struct RepositoryView<ViewModel: RepositoryViewModelProtocol>: View {
         .ignoresSafeArea()
     }
     
-    private func header(repository: Repository) -> some View {
+    private func headerView(repository: Repository) -> some View {
         VStack(alignment: .leading, spacing: 8) {
             // owner
             HStack(spacing: 8) {
@@ -49,13 +49,16 @@ struct RepositoryView<ViewModel: RepositoryViewModelProtocol>: View {
                     .foregroundColor(.secondary)
                     .frame(maxWidth: .infinity, alignment: .leading)
             }
+            
             // title
             Text(repository.name)
                 .font(.title)
                 .fontWeight(.bold)
+            
             // description
             Text(repository.description)
                 .padding(.bottom, 12)
+            
             // tagViews
             HStack(spacing: 16) {
                 tagView(imageName: "star", title: "Star", count: repository.stargazersCount)
@@ -104,11 +107,6 @@ struct RepositoryView_Previews: PreviewProvider {
             RepositoryView(viewModel: MockRepositoryViewModel())
                 .navigationBarTitleDisplayMode(.inline)
         }
-        NavigationView {
-            RepositoryView(viewModel: MockRepositoryViewModel())
-                .navigationBarTitleDisplayMode(.inline)
-        }
-        .environment(\.colorScheme, .dark)
     }
 }
 #endif

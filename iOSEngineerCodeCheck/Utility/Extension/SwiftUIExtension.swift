@@ -5,7 +5,7 @@ extension Color {
 }
 
 extension Binding where Value == Bool {
-    /// Mirror a optional binding to bool binding.
+    /// Mirror an optional binding to a bool binding.
     init<T>(optional: Binding<T?>) {
         self = Binding<Bool>(get: {
             optional.wrappedValue != nil
