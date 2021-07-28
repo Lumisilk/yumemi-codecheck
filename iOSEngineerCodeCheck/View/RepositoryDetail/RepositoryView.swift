@@ -60,7 +60,24 @@ struct RepositoryView<ViewModel: RepositoryViewModelProtocol>: View {
 
             // description
             Text(repository.description)
-                .padding(.bottom, 12)
+                .padding(.bottom, 8)
+
+            // links
+            if let homePage = repository.homepage {
+                HStack(spacing: 8) {
+                    Image(systemName: "link")
+                        .foregroundColor(.secondary)
+                    Button {
+                        UIApplication.shared.open(homePage, completionHandler: nil)
+                    } label: {
+                        Text(homePage.absoluteString)
+                            .foregroundColor(.primary)
+                            .fontWeight(.medium)
+                    }
+                    .buttonStyle(BorderlessButtonStyle())
+                }
+                .font(.subheadline)
+            }
 
             // tagViews
             HStack(spacing: 16) {
@@ -80,9 +97,10 @@ struct RepositoryView<ViewModel: RepositoryViewModelProtocol>: View {
         HStack(spacing: 4) {
             Image(systemName: imageName)
                 .foregroundColor(.secondary)
-                .padding(.horizontal, 4)
+                .padding(.trailing, 4)
             Text(formatCount(count: count))
                 .font(Font.system(.subheadline, design: .rounded))
+                .fontWeight(.medium)
             Text(title)
         }
         .font(.subheadline)
@@ -98,10 +116,10 @@ struct RepositoryView_Previews: PreviewProvider {
         @Published var error: Error?
 
         init() {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+//            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                 self.repository = PreviewData.get(jsonFileName: "repository")
                 self.isLoading = false
-            }
+//            }
         }
 
         func loadRepository() {}
@@ -112,6 +130,7 @@ struct RepositoryView_Previews: PreviewProvider {
             RepositoryView(viewModel: MockRepositoryViewModel())
                 .navigationBarTitleDisplayMode(.inline)
         }
+        .environment(\.colorScheme, .dark)
     }
 }
 #endif
