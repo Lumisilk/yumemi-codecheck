@@ -17,10 +17,10 @@ class RepositorySearchViewController: UITableViewController {
     }
     
     override func viewDidLoad() {
-        title = "Github Repositories"
+        title = "Search Repositories"
         configureSearchController()
+        configureTableView()
         subscribe()
-        tableView.register(RepositorySearchResultCell.self, forCellReuseIdentifier: RepositorySearchResultCell.identifier)
     }
     
     private func configureSearchController() {
@@ -29,6 +29,11 @@ class RepositorySearchViewController: UITableViewController {
         searchController.searchBar.placeholder = "Search repositories"
         searchController.obscuresBackgroundDuringPresentation = false
         navigationItem.searchController = searchController
+    }
+    
+    private func configureTableView() {
+        tableView.register(RepositorySearchResultCell.self, forCellReuseIdentifier: RepositorySearchResultCell.identifier)
+        tableView.keyboardDismissMode = .onDrag
     }
     
     private func subscribe() {
