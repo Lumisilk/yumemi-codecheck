@@ -3,6 +3,7 @@ import UIKit
 import SwiftUI
 import SnapKit
 
+/// Present a repository from a search result.
 final class RepositorySearchResultCell: UITableViewCell {
     
     let ownerAvatarImageView = UIImageView()

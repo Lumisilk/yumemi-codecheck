@@ -17,6 +17,7 @@
 		BB27BA2A26AF8CD300D3B9AA /* repositories_search_result.json in Resources */ = {isa = PBXBuildFile; fileRef = BB27BA2926AF8CD300D3B9AA /* repositories_search_result.json */; };
 		BB27BA2E26AF8FFD00D3B9AA /* RepositoryRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB27BA2D26AF8FFD00D3B9AA /* RepositoryRequest.swift */; };
 		BB27BA3026AF916E00D3B9AA /* RepositoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB27BA2F26AF916E00D3B9AA /* RepositoryViewModel.swift */; };
+		BB57CF9326B0FA3E004C5D5C /* LoadingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB57CF9226B0FA3E004C5D5C /* LoadingCell.swift */; };
 		BBCADE1426AC016A005219EA /* Request+HTTPMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBCADE1326AC016A005219EA /* Request+HTTPMethod.swift */; };
 		BBE1640B26AC5ABD00A440BA /* Client.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBE1640A26AC5ABD00A440BA /* Client.swift */; };
 		BBE1640E26AC651700A440BA /* RepositorySearchResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBE1640D26AC651700A440BA /* RepositorySearchResult.swift */; };
@@ -54,6 +55,7 @@
 		BB27BA2926AF8CD300D3B9AA /* repositories_search_result.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = repositories_search_result.json; sourceTree = "<group>"; };
 		BB27BA2D26AF8FFD00D3B9AA /* RepositoryRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryRequest.swift; sourceTree = "<group>"; };
 		BB27BA2F26AF916E00D3B9AA /* RepositoryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryViewModel.swift; sourceTree = "<group>"; };
+		BB57CF9226B0FA3E004C5D5C /* LoadingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingCell.swift; sourceTree = "<group>"; };
 		BBCADE1326AC016A005219EA /* Request+HTTPMethod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Request+HTTPMethod.swift"; sourceTree = "<group>"; };
 		BBE1640A26AC5ABD00A440BA /* Client.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Client.swift; sourceTree = "<group>"; };
 		BBE1640D26AC651700A440BA /* RepositorySearchResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositorySearchResult.swift; sourceTree = "<group>"; };
@@ -149,6 +151,7 @@
 				BBF974AD26AFE105004E254E /* RepositorySearchViewModel.swift */,
 				BFD945E2244DC5E80012785A /* RepositorySearchViewController.swift */,
 				BBF974B526AFF719004E254E /* RepositorySearchCell.swift */,
+				BB57CF9226B0FA3E004C5D5C /* LoadingCell.swift */,
 			);
 			path = RepositoriesSearch;
 			sourceTree = "<group>";
@@ -367,6 +370,7 @@
 				BB27BA1526AE9E9D00D3B9AA /* Repository.swift in Sources */,
 				BFD945DF244DC5E80012785A /* AppDelegate.swift in Sources */,
 				BFD945E1244DC5E80012785A /* SceneDelegate.swift in Sources */,
+				BB57CF9326B0FA3E004C5D5C /* LoadingCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

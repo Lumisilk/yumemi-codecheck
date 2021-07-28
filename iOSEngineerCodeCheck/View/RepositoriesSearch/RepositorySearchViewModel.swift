@@ -3,10 +3,11 @@ import Foundation
 
 protocol RepositorySearchViewModelProtocol {
     var client: Client { get }
-    var isLoadingPublisher: AnyPublisher<Bool, Never> { get }
-    var errorPublisher: AnyPublisher<Error, Never> { get }
+    var isLoading: CurrentValueSubject<Bool, Never> { get }
     var repositories: CurrentValueSubject<[RepositorySearchResult.Repository], Never> { get }
+    var errorPublisher: AnyPublisher<Error, Never> { get }
     func search(text: String)
+    func reset()
 }
 
 final class RepositorySearchViewModel: RepositorySearchViewModelProtocol {
@@ -14,13 +15,9 @@ final class RepositorySearchViewModel: RepositorySearchViewModelProtocol {
     let client: Client
     var cancellable: AnyCancellable?
     
-    @Published var isLoading = false
-    @Published var error: Error?
+    let isLoading = CurrentValueSubject<Bool, Never>(false)
     let repositories = CurrentValueSubject<[RepositorySearchResult.Repository], Never>([])
-    
-    var isLoadingPublisher: AnyPublisher<Bool, Never> {
-        $isLoading.eraseToAnyPublisher()
-    }
+    @Published var error: Error?
     
     var errorPublisher: AnyPublisher<Error, Never> {
         $error.compactMap { $0 }.eraseToAnyPublisher()
@@ -31,7 +28,8 @@ final class RepositorySearchViewModel: RepositorySearchViewModelProtocol {
     }
     
     func search(text: String) {
-        isLoading = true
+        reset()
+        isLoading.send(true)
         let request = RepositorySearchRequest(query: text)
         cancellable = client.send(request)
             .receive(on: DispatchQueue.main)
@@ -40,9 +38,13 @@ final class RepositorySearchViewModel: RepositorySearchViewModelProtocol {
                     self?.error = error
                     print(error)
                 }
-                self?.isLoading = false
+                self?.isLoading.send(false)
             }, receiveValue: { [weak self] searchResult in
                 self?.repositories.send(searchResult.repositories)
             })
+    }
+    
+    func reset() {
+        repositories.send([])
     }
 }
