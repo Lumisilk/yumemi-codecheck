@@ -16,4 +16,3 @@ extension Binding where Value == Bool {
         })
     }
 }
-

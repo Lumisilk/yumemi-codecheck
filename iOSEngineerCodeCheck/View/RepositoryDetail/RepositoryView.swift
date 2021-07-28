@@ -3,12 +3,15 @@ import Combine
 import struct Kingfisher.KFImage
 
 struct RepositoryView<ViewModel: RepositoryViewModelProtocol>: View {
-    
+
     @ObservedObject var viewModel: ViewModel
-    
+
     var body: some View {
-        if viewModel.repository == nil && viewModel.isLoading {
+        if viewModel.repository == nil {
             loadingView
+                .onAppear {
+                    viewModel.loadRepository()
+                }
         } else {
             List {
                 if let repository = viewModel.repository {
@@ -25,7 +28,7 @@ struct RepositoryView<ViewModel: RepositoryViewModelProtocol>: View {
             }
         }
     }
-    
+
     private var loadingView: some View {
         ZStack {
             Color.systemGroupedBackground
@@ -34,7 +37,7 @@ struct RepositoryView<ViewModel: RepositoryViewModelProtocol>: View {
         }
         .ignoresSafeArea()
     }
-    
+
     private func headerView(repository: Repository) -> some View {
         VStack(alignment: .leading, spacing: 8) {
             // owner
@@ -49,16 +52,33 @@ struct RepositoryView<ViewModel: RepositoryViewModelProtocol>: View {
                     .foregroundColor(.secondary)
                     .frame(maxWidth: .infinity, alignment: .leading)
             }
-            
+
             // title
             Text(repository.name)
                 .font(.title)
                 .fontWeight(.bold)
-            
+
             // description
             Text(repository.description)
-                .padding(.bottom, 12)
-            
+                .padding(.bottom, 8)
+
+            // links
+            if let homePage = repository.homepage {
+                HStack(spacing: 8) {
+                    Image(systemName: "link")
+                        .foregroundColor(.secondary)
+                    Button {
+                        UIApplication.shared.open(homePage, completionHandler: nil)
+                    } label: {
+                        Text(homePage.absoluteString)
+                            .foregroundColor(.primary)
+                            .fontWeight(.medium)
+                    }
+                    .buttonStyle(BorderlessButtonStyle())
+                }
+                .font(.subheadline)
+            }
+
             // tagViews
             HStack(spacing: 16) {
                 tagView(imageName: "star", title: "Star", count: repository.stargazersCount)
@@ -71,15 +91,16 @@ struct RepositoryView<ViewModel: RepositoryViewModelProtocol>: View {
         }
         .padding(.vertical)
     }
-    
+
     /// Represent a star, fork, watch or issue count.
     private func tagView(imageName: String, title: LocalizedStringKey, count: Int) -> some View {
         HStack(spacing: 4) {
             Image(systemName: imageName)
                 .foregroundColor(.secondary)
-                .padding(.horizontal, 4)
+                .padding(.trailing, 4)
             Text(formatCount(count: count))
                 .font(Font.system(.subheadline, design: .rounded))
+                .fontWeight(.medium)
             Text(title)
         }
         .font(.subheadline)
@@ -88,25 +109,28 @@ struct RepositoryView<ViewModel: RepositoryViewModelProtocol>: View {
 
 #if DEBUG
 struct RepositoryView_Previews: PreviewProvider {
-    
+
     private final class MockRepositoryViewModel: RepositoryViewModelProtocol {
-        @Published var repository: Repository? = nil
+        @Published var repository: Repository?
         @Published var isLoading = true
         @Published var error: Error?
-        
+
         init() {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+//            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                 self.repository = PreviewData.get(jsonFileName: "repository")
                 self.isLoading = false
-            }
+//            }
         }
+
+        func loadRepository() {}
     }
-    
+
     static var previews: some View {
         NavigationView {
             RepositoryView(viewModel: MockRepositoryViewModel())
                 .navigationBarTitleDisplayMode(.inline)
         }
+        .environment(\.colorScheme, .dark)
     }
 }
 #endif

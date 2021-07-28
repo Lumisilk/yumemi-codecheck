@@ -13,6 +13,7 @@ protocol RepositoryViewModelProtocol: ObservableObject {
     var repository: Repository? { get }
     var isLoading: Bool { get }
     var error: Error? { get set }
+    func loadRepository()
 }
 
 final class RepositoryViewModel: RepositoryViewModelProtocol {
@@ -20,18 +21,17 @@ final class RepositoryViewModel: RepositoryViewModelProtocol {
     var cancellable: AnyCancellable?
     let ownerName: String
     let repositoryName: String
-    
+
     @Published var repository: Repository?
     @Published var isLoading = false
     @Published var error: Error?
-    
+
     init(client: Client, ownerName: String, repositoryName: String) {
         self.client = client
         self.ownerName = ownerName
         self.repositoryName = repositoryName
-        loadRepository()
     }
-    
+
     func loadRepository() {
         isLoading = true
         let request = RepositoryRequest(ownerName: ownerName, repositoryName: repositoryName)

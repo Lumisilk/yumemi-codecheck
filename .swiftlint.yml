@@ -1,0 +1,9 @@
+disabled_rules:
+- line_length
+- identifier_name
+- nesting
+- function_body_length
+
+included:
+- iOSEngineerCodeCheck
+- iOSEngineerCodeCheckTests

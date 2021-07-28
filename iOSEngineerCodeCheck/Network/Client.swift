@@ -6,14 +6,14 @@ protocol Client {
 }
 
 struct GithubClient: Client {
-    
+
     let host = "https://api.github.com/search/repositories"
     let session: URLSession
-    
+
     init(session: URLSession = .shared) {
         self.session = session
     }
-    
+
     func makeURLRequest<RequestType: Request>(by request: RequestType) -> URLRequest {
         var components = URLComponents(string: host)!
         if !request.parameters.isEmpty {
@@ -28,7 +28,7 @@ struct GithubClient: Client {
         urlRequest.addValue("application/vnd.github.v3+json", forHTTPHeaderField: "accept")
         return urlRequest
     }
-    
+
     func send<RequestType: Request>(_ request: RequestType) -> AnyPublisher<RequestType.Response, Error> {
         let urlRequest = makeURLRequest(by: request)
         return session.dataTaskPublisher(for: urlRequest)
