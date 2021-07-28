@@ -7,8 +7,11 @@ struct RepositoryView<ViewModel: RepositoryViewModelProtocol>: View {
     @ObservedObject var viewModel: ViewModel
     
     var body: some View {
-        if viewModel.repository == nil && viewModel.isLoading {
+        if viewModel.repository == nil {
             loadingView
+                .onAppear {
+                    viewModel.loadRepository()
+                }
         } else {
             List {
                 if let repository = viewModel.repository {
@@ -100,6 +103,8 @@ struct RepositoryView_Previews: PreviewProvider {
                 self.isLoading = false
             }
         }
+        
+        func loadRepository() {}
     }
     
     static var previews: some View {

@@ -18,21 +18,6 @@ struct Repository: Decodable {
             case htmlURL = "html_url"
         }
     }
-    
-    struct License: Decodable {
-        let key: String
-        let name: String
-        let spdxId: String
-        @URLDecoder var url: URL?
-        let nodeId: String
-        private enum CodingKeys: String, CodingKey {
-            case key
-            case name
-            case spdxId = "spdx_id"
-            case url
-            case nodeId = "node_id"
-        }
-    }
 
     let id: Int
     let name: String
@@ -40,7 +25,6 @@ struct Repository: Decodable {
     let owner: Owner
     let description: String
     let language: String?
-    let license: License?
     
     @URLDecoder var htmlUrl: URL?
     @URLDecoder var homepage: URL?
@@ -59,7 +43,6 @@ struct Repository: Decodable {
         case htmlUrl = "html_url"
         case homepage
         case language
-        case license
 
         case stargazersCount = "stargazers_count"
         case forksCount = "forks_count"

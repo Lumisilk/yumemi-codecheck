@@ -62,6 +62,35 @@ class NetworkTests: XCTestCase {
         }
     }
     
+    func testSearchRepositoriesStarDescending() throws {
+        let expectation = XCTestExpectation()
+        var requestError: Error?
+        var searchResult: RepositorySearchResult!
+        
+        let request = RepositorySearchRequest(query: "python", sortType: .stars)
+        client.send(request)
+            .sink { completion in
+                switch completion {
+                case .finished:
+                    expectation.fulfill()
+                case .failure(let error):
+                    requestError = error
+                }
+            } receiveValue: { searchResult = $0 }
+            .store(in: &cancellables)
+        wait(for: [expectation], timeout: 5)
+        
+        if let error = requestError {
+            throw error
+        } else {
+            // star count is descending
+            let _ = searchResult.repositories.reduce(Int.max) { maxStar, repo in
+                XCTAssert(repo.stargazersCount <= maxStar)
+                return repo.stargazersCount
+            }
+        }
+    }
+    
     func testRepository() throws {
         let expectation = XCTestExpectation()
         var requestError: Error?

@@ -7,21 +7,17 @@ protocol RepositorySearchViewModelProtocol {
     var repositories: CurrentValueSubject<[RepositorySearchResult.Repository], Never> { get }
     var errorPublisher: AnyPublisher<Error, Never> { get }
     func search(text: String)
-    func reset()
 }
 
 final class RepositorySearchViewModel: RepositorySearchViewModelProtocol {
     
     let client: Client
-    var cancellable: AnyCancellable?
+    private var cancellable: AnyCancellable?
     
     let isLoading = CurrentValueSubject<Bool, Never>(false)
     let repositories = CurrentValueSubject<[RepositorySearchResult.Repository], Never>([])
-    @Published var error: Error?
-    
-    var errorPublisher: AnyPublisher<Error, Never> {
-        $error.compactMap { $0 }.eraseToAnyPublisher()
-    }
+    private let error = PassthroughSubject<Error, Never>()
+    var errorPublisher: AnyPublisher<Error, Never> { error.eraseToAnyPublisher() }
     
     init(client: Client) {
         self.client = client
@@ -29,22 +25,21 @@ final class RepositorySearchViewModel: RepositorySearchViewModelProtocol {
     
     func search(text: String) {
         reset()
-        isLoading.send(true)
+        isLoading.value = true
         let request = RepositorySearchRequest(query: text)
         cancellable = client.send(request)
-            .receive(on: DispatchQueue.main)
             .sink(receiveCompletion: { [weak self] completion in
                 if case let .failure(error) = completion {
-                    self?.error = error
+                    self?.error.send(error)
                     print(error)
                 }
-                self?.isLoading.send(false)
+                self?.isLoading.value = false
             }, receiveValue: { [weak self] searchResult in
-                self?.repositories.send(searchResult.repositories)
+                self?.repositories.value = searchResult.repositories
             })
     }
     
-    func reset() {
+    private func reset() {
         repositories.send([])
     }
 }

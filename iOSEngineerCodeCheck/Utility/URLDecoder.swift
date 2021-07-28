@@ -2,7 +2,7 @@ import Foundation
 
 /// An property wrapper to prevent throwing error when decoding empty `String` to `URL`.
 @propertyWrapper
-struct URLDecoder: Decodable {
+struct URLDecoder: Equatable, Decodable {
     var wrappedValue: URL?
     
     init(from decoder: Decoder) throws {

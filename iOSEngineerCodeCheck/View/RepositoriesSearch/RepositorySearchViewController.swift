@@ -25,8 +25,10 @@ class RepositorySearchViewController: UITableViewController {
     
     private func configureSearchController() {
         let searchController = UISearchController()
+        searchController.hidesNavigationBarDuringPresentation = false
         searchController.searchBar.delegate = self
         searchController.searchBar.placeholder = "Search repositories"
+        searchController.searchBar.showsCancelButton = false
         searchController.obscuresBackgroundDuringPresentation = false
         navigationItem.searchController = searchController
     }
@@ -104,10 +106,6 @@ extension RepositorySearchViewController: UISearchBarDelegate {
             viewModel.search(text: searchText)
         }
     }
-    
-    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        viewModel.reset()
-    }
 }
 
 #if DEBUG
@@ -133,7 +131,6 @@ struct RepositorySearchViewControllerRepresentable: UIViewControllerRepresentabl
         }
         
         func search(text: String) {}
-        func reset() {}
     }
     
     let delay: Double
