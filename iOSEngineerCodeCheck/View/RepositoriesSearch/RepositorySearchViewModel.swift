@@ -38,6 +38,7 @@ final class RepositorySearchViewModel: RepositorySearchViewModelProtocol {
             .sink(receiveCompletion: { [weak self] completion in
                 if case let .failure(error) = completion {
                     self?.error = error
+                    print(error)
                 }
                 self?.isLoading = false
             }, receiveValue: { [weak self] searchResult in

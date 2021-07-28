@@ -73,8 +73,8 @@ struct RepositoryView<ViewModel: RepositoryViewModelProtocol>: View {
     private func tagView(imageName: String, title: LocalizedStringKey, count: Int) -> some View {
         HStack(spacing: 4) {
             Image(systemName: imageName)
-                .imageScale(.small)
                 .foregroundColor(.secondary)
+                .padding(.horizontal, 4)
             Text(formatCount(count: count))
                 .font(Font.system(.subheadline, design: .rounded))
             Text(title)

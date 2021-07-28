@@ -15,7 +15,7 @@ struct RepositorySearchResult: Decodable {
 
 extension RepositorySearchResult {
     /// Represent a github repository within a `RepositoriesSearchResult`.
-    struct Repository: Identifiable, Hashable, Decodable {
+    struct Repository: Identifiable, Decodable {
         
         /// Represent an owner of a repository.
         struct Owner: Identifiable, Decodable {
@@ -36,7 +36,7 @@ extension RepositorySearchResult {
         let fullName: String
         let language: String?
         let owner: Owner
-        let description: String
+        let description: String?
         let stargazersCount: Int
         
         private enum CodingKeys: String, CodingKey {

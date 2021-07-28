@@ -20,6 +20,7 @@ class RepositorySearchViewController: UITableViewController {
         title = "Github Repositories"
         configureSearchController()
         subscribe()
+        tableView.register(RepositorySearchResultCell.self, forCellReuseIdentifier: RepositorySearchResultCell.identifier)
     }
     
     private func configureSearchController() {
@@ -65,10 +66,11 @@ class RepositorySearchViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = UITableViewCell(style: .subtitle, reuseIdentifier: nil)
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: RepositorySearchResultCell.identifier) as? RepositorySearchResultCell else {
+            return UITableViewCell()
+        }
         let repository = viewModel.repositories.value[indexPath.row]
-        cell.textLabel?.text = repository.fullName
-        cell.detailTextLabel?.text = repository.language
+        cell.configure(repository: repository)
         return cell
     }
     
@@ -77,7 +79,7 @@ class RepositorySearchViewController: UITableViewController {
         let viewModel = RepositoryViewModel(client: viewModel.client, ownerName: repository.owner.login, repositoryName: repository.name)
         let view = RepositoryView(viewModel: viewModel)
         let viewController = UIHostingController(rootView: view)
-        viewController.title = repository.owner.login
+        viewController.title = repository.name
         show(viewController, sender: nil)
     }
 }
@@ -88,10 +90,14 @@ extension RepositorySearchViewController: UISearchBarDelegate {
             viewModel.search(text: searchText)
         }
     }
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        viewModel.repositories.value = []
+    }
 }
 
 #if DEBUG
-private struct RepositorySearchViewControllerRepresentable: UIViewControllerRepresentable {
+struct RepositorySearchViewControllerRepresentable: UIViewControllerRepresentable {
     
     final class MockRepositorySearchViewModel: RepositorySearchViewModelProtocol {
         
@@ -108,8 +114,8 @@ private struct RepositorySearchViewControllerRepresentable: UIViewControllerRepr
         var errorPublisher: AnyPublisher<Error, Never> {
             $error.compactMap { $0 }.eraseToAnyPublisher()
         }
-        init() {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+        init(delay: Double) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
                 let searchResult: RepositorySearchResult = PreviewData.get(jsonFileName: "repositories_search_result")!
                 self.repositories.send(searchResult.repositories)
                 self.isLoading = false
@@ -119,8 +125,10 @@ private struct RepositorySearchViewControllerRepresentable: UIViewControllerRepr
         func search(text: String) {}
     }
     
+    let delay: Double
+    
     func makeUIViewController(context: Context) -> UINavigationController {
-        UINavigationController(rootViewController: RepositorySearchViewController(viewModel: MockRepositorySearchViewModel()))
+        UINavigationController(rootViewController: RepositorySearchViewController(viewModel: MockRepositorySearchViewModel(delay: delay)))
     }
     
     func updateUIViewController(_ uiViewController: UINavigationController, context: Context) {
@@ -130,7 +138,7 @@ private struct RepositorySearchViewControllerRepresentable: UIViewControllerRepr
 
 struct RepositorySearchViewControllerPreview: PreviewProvider {
     static var previews: some View {
-        RepositorySearchViewControllerRepresentable()
+        RepositorySearchViewControllerRepresentable(delay: 1)
     }
 }
 #endif
